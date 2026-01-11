@@ -3,7 +3,7 @@ import time
 from datetime import datetime
 
 # ==============================================================================
-# 1. PAGE CONFIGURATION
+# 1. PAGE CONFIG
 # ==============================================================================
 st.set_page_config(
     page_title="PRAGYAN NEXUS AI",
@@ -13,7 +13,7 @@ st.set_page_config(
 )
 
 # ==============================================================================
-# 2. SCI-FI UI + CYBER THEME
+# 2. SCI-FI UI STYLE
 # ==============================================================================
 st.markdown("""
 <style>
@@ -32,15 +32,14 @@ h1 {
     text-align: center;
     color: #38bdf8;
     font-weight: 900;
-    letter-spacing: 8px;
+    letter-spacing: 6px;
 }
 
 .stChatMessage {
     background: rgba(2, 6, 23, 0.9);
     border-radius: 18px;
-    padding: 24px;
+    padding: 22px;
     border: 1px solid rgba(56,189,248,0.4);
-    box-shadow: 0 0 30px rgba(56,189,248,0.15);
 }
 
 .badge {
@@ -56,13 +55,10 @@ h1 {
 """, unsafe_allow_html=True)
 
 # ==============================================================================
-# 3. SCHOOL KNOWLEDGE CORE (DATABASE)
+# 3. SCHOOL KNOWLEDGE BASE
 # ==============================================================================
-SCHOOL_DATA = {
-    "school_intro": (
-        "Pragyan Public School, Jewar is a CBSE-affiliated institution focused on "
-        "academic excellence, discipline, and holistic development."
-    ),
+DATA = {
+    "intro": "Pragyan Public School, Jewar is a CBSE-affiliated institution focused on academic excellence, discipline, and holistic development.",
 
     "fees": {
         "6": "₹32,500 per year",
@@ -89,10 +85,10 @@ SCHOOL_DATA = {
     ),
 
     "rules": (
-        "• Mobile phones are strictly prohibited.\n"
-        "• 75% attendance is mandatory.\n"
-        "• Proper school uniform is compulsory.\n"
-        "• Discipline and punctuality are mandatory."
+        "• Mobile phones are strictly prohibited\n"
+        "• 75% attendance is mandatory\n"
+        "• Proper uniform is compulsory\n"
+        "• Discipline is strictly followed"
     ),
 
     "facilities": (
@@ -100,7 +96,7 @@ SCHOOL_DATA = {
         "• Atal Tinkering Lab (ATL)\n"
         "• Science & Computer Labs\n"
         "• Library\n"
-        "• Sports Complex\n"
+        "• Sports Facilities\n"
         "• NCC & Robotics"
     ),
 
@@ -112,53 +108,47 @@ SCHOOL_DATA = {
 }
 
 # ==============================================================================
-# 4. INTELLIGENT QUERY ENGINE (RULE-BASED AI)
+# 4. AI QUERY ENGINE (RULE BASED)
 # ==============================================================================
-def process_query(query: str) -> str:
+def answer_query(query: str) -> str:
     q = query.lower()
 
-    # SCHOOL INTRO
-    if any(word in q for word in ["school", "about", "introduction"]):
-        return SCHOOL_DATA["school_intro"]
+    if any(x in q for x in ["about", "school", "pragyan"]):
+        return DATA["intro"]
 
-    # FEES LOGIC
     if "fee" in q:
         for cls in ["6","7","8","9","10","11","12"]:
-            if cls in q or f"class {cls}" in q or f"{cls}th" in q or f"xii" in q:
+            if cls in q or f"class {cls}" in q or f"{cls}th" in q or "xii" in q:
                 if cls in ["11","12"]:
                     if "science" in q:
-                        return f"Fee for Class {cls} (Science): {SCHOOL_DATA['fees'][cls]['science']}"
+                        return f"Fee for Class {cls} (Science): {DATA['fees'][cls]['science']}"
                     if "commerce" in q:
-                        return f"Fee for Class {cls} (Commerce): {SCHOOL_DATA['fees'][cls]['commerce']}"
+                        return f"Fee for Class {cls} (Commerce): {DATA['fees'][cls]['commerce']}"
                     if "arts" in q:
-                        return f"Fee for Class {cls} (Arts): {SCHOOL_DATA['fees'][cls]['arts']}"
+                        return f"Fee for Class {cls} (Arts): {DATA['fees'][cls]['arts']}"
                     return (
                         f"Fee for Class {cls}:\n"
-                        f"Science – {SCHOOL_DATA['fees'][cls]['science']}\n"
-                        f"Commerce – {SCHOOL_DATA['fees'][cls]['commerce']}\n"
-                        f"Arts – {SCHOOL_DATA['fees'][cls]['arts']}"
+                        f"Science – {DATA['fees'][cls]['science']}\n"
+                        f"Commerce – {DATA['fees'][cls]['commerce']}\n"
+                        f"Arts – {DATA['fees'][cls]['arts']}"
                     )
-                return f"Fee for Class {cls}: {SCHOOL_DATA['fees'][cls]}"
-        return "Please mention the class (e.g., fee of class 6)."
+                return f"Fee for Class {cls}: {DATA['fees'][cls]}"
+        return "Please mention the class (example: fee of class 9)."
 
-    # TIMINGS
-    if any(word in q for word in ["time", "timing", "schedule"]):
-        return SCHOOL_DATA["timings"]
+    if any(x in q for x in ["time", "timing"]):
+        return DATA["timings"]
 
-    # RULES
-    if any(word in q for word in ["rule", "discipline"]):
-        return SCHOOL_DATA["rules"]
+    if any(x in q for x in ["rule", "discipline"]):
+        return DATA["rules"]
 
-    # FACILITIES
-    if any(word in q for word in ["facility", "facilities", "labs", "sports"]):
-        return SCHOOL_DATA["facilities"]
+    if any(x in q for x in ["facility", "facilities", "lab", "sports"]):
+        return DATA["facilities"]
 
-    # CONTACT
-    if any(word in q for word in ["contact", "phone", "number"]):
-        return SCHOOL_DATA["contact"]
+    if any(x in q for x in ["contact", "number", "phone"]):
+        return DATA["contact"]
 
     return (
-        "🔒 Secure AI Core Response:\n"
+        "🔒 Secure AI Core:\n"
         "I can answer only verified questions related to Pragyan Public School."
     )
 
@@ -174,39 +164,55 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ==============================================================================
-# 6. SESSION MEMORY
+# 6. SIDEBAR CONTROL PANEL
+# ==============================================================================
+with st.sidebar:
+    st.markdown("## 🛰️ NEXUS CONTROL PANEL")
+    st.markdown("""
+    **System Status:** 🟢 ONLINE  
+    **Security:** 🔐 Encrypted  
+    **Network:** 📡 Satellite Linked  
+    **AI Core:** 🧠 Rule-Based  
+    **Response:** ⚡ Instant  
+    """)
+    st.divider()
+    st.markdown("### 🏫 Pragyan Public School")
+    st.markdown("CBSE Affiliated • Jewar, UP")
+    st.divider()
+    st.progress(100)
+    st.caption("© 2026 PRAGYAN NEXUS AI")
+
+# ==============================================================================
+# 7. CHAT MEMORY
 # ==============================================================================
 if "chat" not in st.session_state:
     st.session_state.chat = [
-        {
-            "role": "assistant",
-            "content": "🛰️ PRAGYAN NEXUS AI ONLINE.\nAsk me anything about Pragyan Public School."
-        }
+        {"role": "assistant", "content": "🛰️ PRAGYAN NEXUS AI ONLINE.\nAsk me anything about Pragyan Public School."}
     ]
 
 # ==============================================================================
-# 7. CHAT DISPLAY
+# 8. CHAT DISPLAY
 # ==============================================================================
 for msg in st.session_state.chat:
     with st.chat_message(msg["role"]):
         st.markdown(msg["content"])
 
 # ==============================================================================
-# 8. INPUT
+# 9. INPUT
 # ==============================================================================
-if user_input := st.chat_input("Ask about fees, rules, facilities, timings, contacts..."):
+if user_input := st.chat_input("Ask about fees, rules, facilities, timings..."):
     st.session_state.chat.append({"role": "user", "content": user_input})
     with st.chat_message("user"):
         st.markdown(user_input)
 
-    response = process_query(user_input)
+    reply = answer_query(user_input)
 
     with st.chat_message("assistant"):
-        placeholder = st.empty()
+        box = st.empty()
         text = ""
-        for word in response.split():
+        for word in reply.split():
             text += word + " "
-            time.sleep(0.015)
-            placeholder.markdown(text)
+            time.sleep(0.012)
+            box.markdown(text)
 
-    st.session_state.chat.append({"role": "assistant", "content": response})
+    st.session_state.chat.append({"role": "assistant", "content": reply})
